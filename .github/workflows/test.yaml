@@ -1,4 +1,4 @@
-name: Test
+name: Listing S3 Buckets
 
 on: 
   push:
@@ -6,23 +6,19 @@ on:
       - master
   workflow_dispatch:
 
-permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout  
-
 jobs:
-  list_buckets:
+  listing_buckets:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup AWS Credentials
+      - name: Set up AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
-      
+
       - name: List S3 Buckets
-        env: 
-          AWS_REGION: ${{ secrets.AWS_REGION }}         
+        env:
+          AWS_REGION: ${{ secret.AWS_REGION }}
         run: |
-            echo "Listing all S3 buckets in region: ${AWS_REGION}"
-            aws s3 ls
+          echo "Listing S3 Buckets"
+          aws s3 ls          
