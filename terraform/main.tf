@@ -156,7 +156,7 @@ resource "aws_s3_bucket_policy" "static_site_policy" {
 }
 
 resource "aws_route53_record" "ehsanshekari_root" {
-  zone_id = aws_route53_zone.domain_zone.zone_id
+  zone_id = data.aws_route53_zone.domain_zone.zone_id
   name    = "ehsanshekari.com"
   type    = "A"
 
@@ -168,7 +168,7 @@ resource "aws_route53_record" "ehsanshekari_root" {
 }
 
 resource "aws_route53_record" "ehsanshekari_www" {
-  zone_id = aws_route53_zone.domain_zone.zone_id
+  zone_id = data.aws_route53_zone.domain_zone.zone_id
   name    = "www.ehsanshekari.com"
   type    = "A"
 
