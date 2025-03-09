@@ -154,3 +154,27 @@ resource "aws_s3_bucket_policy" "static_site_policy" {
     ]
   })
 }
+
+resource "aws_route53_record" "ehsanshekari_root" {
+  zone_id = aws_route53_zone.domain_zone.zone_id
+  name    = "ehsanshekari.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "ehsanshekari_www" {
+  zone_id = aws_route53_zone.domain_zone.zone_id
+  name    = "www.ehsanshekari.com"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
