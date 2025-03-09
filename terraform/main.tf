@@ -50,7 +50,7 @@ resource "aws_acm_certificate" "ehsanshekari_cert" {
   }
 }
 
-data "aws_route53_record" "domain_zone" {
+data "aws_route53_zone" "domain_zone" {
   name = "ehsanshekari.com"
 }
 
