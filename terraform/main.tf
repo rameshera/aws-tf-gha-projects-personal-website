@@ -36,11 +36,11 @@ resource "aws_s3_bucket_public_access_block" "static_site_access" {
 # }
 
 resource "aws_acm_certificate" "ehsanshekari_cert" {
-  domain_name = "ehsanshekari.com"
+  domain_name       = "ehsanshekari.com"
   validation_method = "DNS"
 
   subject_alternative_names = ["www.ehsanshekari.com"]
-  
+
   tags = {
     Name = "ehsanshekari.com SSL Certificate"
   }
@@ -49,3 +49,31 @@ resource "aws_acm_certificate" "ehsanshekari_cert" {
     create_before_destroy = true
   }
 }
+
+
+data "aws_route53_zone" "domain_zone" {
+  name = "ehsanshekari.com"
+}
+
+resource "aws_route53_record" "ehsanshekari_cert_validation" {
+  for_each = {
+    for dvo in aws_acm_certificate.ehsanshekari_cert.domain_validation_options : dvo.domain_name
+    => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  name    = each.value.name
+  records = [each.value.record]
+  ttl     = 60
+  type    = each.value.type
+  zone_id = data.aws_route53_zone.domain_zone_id
+}
+
+resource "aws_acm_certificate_validation" "ehsanshekari_cert_validation" {
+  certificate_arn         = aws_acm_certificate.ehsanshekari_cert.arn
+  validation_record_fqdns = [for record in aws_aws_route53_record.ehsanshekari_cert_validation : record.fqdn]
+}
+
