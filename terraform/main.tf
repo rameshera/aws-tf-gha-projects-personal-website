@@ -74,6 +74,6 @@ resource "aws_route53_record" "ehsanshekari_cert_validation" {
 
 resource "aws_acm_certificate_validation" "ehsanshekari_cert_validation" {
   certificate_arn         = aws_acm_certificate.ehsanshekari_cert.arn
-  validation_record_fqdns = [for record in aws_aws_route53_record.ehsanshekari_cert_validation : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.ehsanshekari_cert_validation : record.fqdn]
 }
 
