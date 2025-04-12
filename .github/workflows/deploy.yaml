@@ -1,4 +1,4 @@
-name: Listing S3 Buckets
+name: Creating S3 Buckets
 
 on: 
   push:
@@ -6,68 +6,80 @@ on:
       - master
   workflow_dispatch:
 
-jobs:
-  listing_buckets:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set Up AWS  Crendentilas 
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.IAM_ROLE }}
-          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: List S3 Buckets
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-        run: |
-          echo "Listing s3 Buckts"
-          aws s3 ls s3://ga-website123
 
+#######################################################
+# name: Listing S3 Buckets
+
+# on: 
+#   push:
+#     branches:
+#       - master
+#   workflow_dispatch:
 
 # jobs:
-#   log_message:
+#   listing_buckets:
 #     runs-on: ubuntu-latest
 #     steps:
-#       - name: log
-#         run: echo "The Workflow is working"
-
-permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v4
-
-#       - name: Set up AWS Credentials
+#       - name: Set Up AWS  Crendentilas 
 #         uses: aws-actions/configure-aws-credentials@v4
 #         with:
 #           role-to-assume: ${{ secrets.IAM_ROLE }}
 #           aws-region: ${{ secrets.AWS_REGION }}
 
-#       - name: Install Terraform
-#         uses: hashicorp/setup-terraform@v3
+#       - name: List S3 Buckets
+#         env:
+#           AWS_REGION: ${{ secrets.AWS_REGION }}
+#         run: |
+#           echo "Listing s3 Buckts"
+#           aws s3 ls s3://ga-website123
+
+
+###################
+jobs:
+  log_message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: log
+        run: echo "The Workflow is working"
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
         
-#       - name: Initialize Terraform
-#         run: terraform init
-#         working-directory: terraform
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: terraform
         
-#       - name: Terraform Plan
-#         env: 
-#           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-#         run: | 
-#           terraform plan \
-#             -var="bucket_name=$BUCKET_NAME"
-#         working-directory: terraform
+      - name: Terraform Plan
+        env: 
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+        run: | 
+          terraform plan \
+            -var="bucket_name=$BUCKET_NAME"
+        working-directory: terraform
         
-#       - name: Terraform Apply
-#         env: 
-#           TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
-#         run: terraform apply -auto-approve
-#         working-directory: terraform  
+      - name: Terraform Apply
+        env: 
+          TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
+        run: terraform apply -auto-approve
+        working-directory: terraform  
         
 #       - name: Uploading Files to S3 Bucket
 #         run: | 
