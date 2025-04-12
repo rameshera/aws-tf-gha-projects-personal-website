@@ -6,7 +6,7 @@ terraform {
   backend "s3" {
     bucket         = "tf-resource-ga"
     region         = "us-east-1"
-    key            = "github-actions/terraform1.tfstate"
+    key            = "github-actions/terraform.tfstate"
     encrypt        = true
     #dynamodb_table = "tf-resources-ga"
   }
