@@ -19,15 +19,10 @@ jobs:
       - name: List S3 Buckets
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
-        run:
+        run: |
           echo "Listing s3 Buckts"
           aws s3 ls
-      - name: Debug Workflow
-        if: ${{ failure() }}
-        run: |
-          echo "Debugging the workflow..."
-          env
-          aws configure list
+
 
 # jobs:
 #   log_message:
