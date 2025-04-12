@@ -8,6 +8,6 @@ terraform {
     region         = "us-east-1"
     key            = "github-actions/terraform1.tfstate"
     encrypt        = true
-    dynamodb_table = "tf-resources-ga"
+    #dynamodb_table = "tf-resources-ga"
   }
 }
