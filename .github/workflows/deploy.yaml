@@ -21,7 +21,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           echo "Listing s3 Buckts"
-          aws s3 ls
+          aws s3 ls s3://ga-website123
 
 
 # jobs:
