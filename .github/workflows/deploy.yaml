@@ -21,7 +21,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          #aws-region: ${{ secrets.AWS_REGION }}
           #aws-region: us-east-1
 
 
@@ -33,16 +33,14 @@ jobs:
         working-directory: terraform
         
       - name: Terraform Plan
-        env: 
-          #BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
-          BUCKET_NAME: tf-resource-ga
-        run: terraform plan
+        # env: 
+        #   BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+        run: terraform plan 
         working-directory: terraform
         
       - name: Terraform Apply
-        env: 
-          #TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
-          TF_VAR_bucket_name: esource-ga
+        # env: 
+        #   TF_VAR_bucket_name: ${{ secrets.BUCKET_NAME }}
         run: terraform apply -auto-approve
         working-directory: terraform  
 
