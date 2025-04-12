@@ -5,6 +5,14 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      # Terraform action you want to perform
+      action:
+        description: "Terraform Action to Perform"
+        type: choice
+        options:
+          - Terraform_apply
+          - Terraform_destroy
 
 permissions:
   id-token: write # This is required for requesting the JWT
