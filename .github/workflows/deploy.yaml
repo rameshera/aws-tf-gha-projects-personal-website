@@ -1,4 +1,4 @@
-name: Deploy the Website
+name: Listing S3 Buckets
 
 on: 
   push:
@@ -7,15 +7,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  log_message:
-    runs-on: ubuntu-latest
+  listing_buckets:
+    #runs-on: ubuntu-latest
     steps:
-      - name: log
-        run: echo "The Workflow is working"
+      - name: Set Up AWS  Crendentilas 
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: List S3 Buckets
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run:
+          echo "Listing s3 Buckts"
+          aws s3 ls
 
-# permissions:
-#   id-token: write # This is required for requesting the JWT
-#   contents: read  # This is required for actions/checkout
+# jobs:
+#   log_message:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: log
+#         run: echo "The Workflow is working"
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
 
 # jobs:
 #   deploy:
