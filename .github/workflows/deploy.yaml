@@ -58,8 +58,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.IAM_ROLE }}
-          #aws-region: ${{ secrets.AWS_REGION }}
-          aws-region: us-east-1
+          aws-region: ${{ secrets.AWS_REGION }}
+          #aws-region: us-east-1
 
 
       - name: Install Terraform
