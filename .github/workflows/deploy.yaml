@@ -8,7 +8,7 @@ on:
 
 jobs:
   listing_buckets:
-    #runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Set Up AWS  Crendentilas 
         uses: aws-actions/configure-aws-credentials@v4
