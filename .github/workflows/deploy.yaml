@@ -32,6 +32,9 @@ jobs:
           #aws-region: ${{ secrets.AWS_REGION }}
           aws-region: us-east-1
 
+      - name: Empty S3 resource
+        run: |
+          aws s3 rm s3://statc-website-ramesh123456 --recursive
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
