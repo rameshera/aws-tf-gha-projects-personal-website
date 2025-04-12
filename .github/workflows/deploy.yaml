@@ -6,12 +6,12 @@ on:
       - master
   workflow_dispatch:
 
-  jobs:
-    log_message:
-      runs-on: ubuntu-latest
-      steps:
-        - name: log
-          run: echo "The Workflow is working"
+jobs:
+  log_message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: log
+        run: echo "The Workflow is working"
 
 # permissions:
 #   id-token: write # This is required for requesting the JWT
